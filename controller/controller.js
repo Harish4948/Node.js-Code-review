@@ -8,7 +8,6 @@ class UsersController {
 
     register(parameter) {
         return new Promise((resolve, reject) => {
-            // console.log("Inside Controller");
             this.usersModel.register(parameter)
                 .then((result) => {
                     return resolve(result)
