@@ -5,4 +5,8 @@ router.get('/', user.index);
 
 router.post('/sqli', user.sqli);
 
+router.get('/login', user.loginpage);
+
+router.post('/login', user.login);
+
 module.exports = router;
