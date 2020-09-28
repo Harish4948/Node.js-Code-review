@@ -51,4 +51,9 @@ function sqli(req) {
   return usersController.register(req);
 }
 
+function login(req) {
+  const usersController = new UsersController;
+  return usersController.login(req);
+}
+
 
