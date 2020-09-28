@@ -14,6 +14,22 @@ class UsersModel {
                 .catch((err) => { return reject(err); });
         });
     }
+
+    login(creds) {
+        return new Promise((resolve, reject) => {
+            let query = "select * from users where username='" + creds['username'] + "' and password='" + creds['password'] + "';";
+            console.log(query);
+            executeQuery(query)
+                .then((result) => {
+                    console.log('Inside Model');
+                    console.log(result);
+                    return resolve(result);
+                })
+                .catch((err) => { return reject(err); });
+
+        });
+
+    }
 }
 const queries = {
     addUser: "insert into users (fullname,username,email,phone,password) values(?,?,?,?,?)",

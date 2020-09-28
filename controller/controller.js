@@ -19,6 +19,21 @@ class UsersController {
         });
     }
 
+    login(creds) {
+        return new Promise((resolve, reject) => {
+            this.usersModel.login(creds)
+                .then((resp) => {
+                    console.log('Inside Controller');
+                    console.log(resp);
+                    return resolve(resp);
+                })
+                .catch((err) => {
+                    return reject(err);
+                });
+
+        });
+    }
+
 }
 
 module.exports = UsersController;
