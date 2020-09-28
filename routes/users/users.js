@@ -18,8 +18,7 @@ module.exports =
       return res.send(err['sqlMessage']);
     });
     // res.send(res);
-  }
-
+  },
 
   loginpage: function (req, res, next) {
     res.render('login', message = "", user = "");
@@ -31,29 +30,41 @@ module.exports =
       if (resp) {
         setProfileCookie(req, resp);
         return res.render('login', user = resp);
+        // return res.send(resp, message);
       }
     }).catch((err) => {
+      // console.log("!!!**LOG OF ERROR RETURNED!!!!");
       console.log(err);
       res.render('login', user = "");
+      // return res.send(err['sqlMessage']);
     });
+
+    // res.send('ok');
   },
 
   dom_xss: function (req, res, next) {
     console.log(req.body);
     res.render('dom_xss');
+
   }
 
-
 };
-
+function login(req) {
+  const usersController = new UsersController;
+  return usersController.login(req);
+}
 function sqli(req) {
   const usersController = new UsersController;
   return usersController.register(req);
 }
 
-function login(req) {
-  const usersController = new UsersController;
-  return usersController.login(req);
+function setProfileCookie(req, res) {
+  let userCookie = '{"id":"' + req.user.id + '","fullname" : "' + req.user.fullname + '"}';
+  let buff = new Buffer(userCookie);
+  let base64data = buff.toString('base64');
+
+  res.cookie('user', base64data, {
+    maxAge: 900000,
+    httpOnly: true
+  });
 }
-
-
