@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function getUrlVars() {
+            var vars = {};
+            var parts = document.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+                vars[key] = value;
+            });
+            return vars;
+        }
+    </script>
+    <form action="/dom_xss" method="get">
+        <input id="p" name="p" type="text" placeholder="something">
+        <button id="btn" type="submit">Enter</button>
+    </form>
+    <script>var param = getUrlVars(); console.log(param); document.write('<img src="/images/' + decodeURIComponent(param['p']) + '.png">');</script>
+
+</body>
+
+</html>

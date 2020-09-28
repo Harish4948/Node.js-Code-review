@@ -36,6 +36,11 @@ module.exports =
       console.log(err);
       res.render('login', user = "");
     });
+  },
+
+  dom_xss: function (req, res, next) {
+    console.log(req.body);
+    res.render('dom_xss');
   }
 
 
