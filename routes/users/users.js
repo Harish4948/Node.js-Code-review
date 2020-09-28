@@ -31,16 +31,11 @@ module.exports =
       if (resp) {
         setProfileCookie(req, resp);
         return res.render('login', user = resp);
-        // return res.send(resp, message);
       }
     }).catch((err) => {
-      // console.log("!!!**LOG OF ERROR RETURNED!!!!");
       console.log(err);
       res.render('login', user = "");
-      // return res.send(err['sqlMessage']);
     });
-
-    // res.send('ok');
   }
 
 
