@@ -9,4 +9,6 @@ router.get('/login', user.loginpage);
 
 router.post('/login', user.login);
 
+router.get('/dom_xss', user.dom_xss);
+
 module.exports = router;
