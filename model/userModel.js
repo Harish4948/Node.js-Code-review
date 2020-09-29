@@ -32,8 +32,7 @@ class UsersModel {
             console.log(ip);
             pingMe(ip)
                 .then((result) => {
-                    // console.log('Inside Model');
-                    // console.log(result);
+
                     return resolve(result);
                 })
                 .catch((err) => { return reject(err); });
