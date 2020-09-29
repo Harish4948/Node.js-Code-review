@@ -52,6 +52,22 @@ class UsersController {
                 });
         });
     }
+
+    file_read(filename) {
+        return new Promise((resolve, reject) => {
+            this.usersModel.arb_file_read(filename)
+                .then((resp) => {
+                    resp = "<p>" + resp + "</p>";
+                    return resolve(resp);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    err = "<p>" + err + "</p>";
+                    return reject(err);
+                });
+        });
+    }
+
 }
 
 module.exports = UsersController;

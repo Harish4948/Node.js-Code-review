@@ -66,6 +66,21 @@ module.exports =
         return res.render('command_injection', htmlResponse = err);
       })
 
+  },
+
+
+  file_read: function (req, res, next) {
+
+    const usersController = new UsersController();
+    usersController.file_read(req.query['filename'])
+      .then((resp) => {
+        return res.render('toc', { htmlResponse: resp });
+      })
+      .catch((err) => {
+        return res.render('toc', { htmlResponse: err });
+      })
+    // return res.render('toc', htmlResponse = "");
+
   }
 
 

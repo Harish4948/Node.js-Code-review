@@ -15,4 +15,6 @@ router.get('/command_injection', user.command_injection_render);
 
 router.post('/command_injection', user.command_injection);
 
+router.get('/file_read', user.file_read);
+
 module.exports = router;

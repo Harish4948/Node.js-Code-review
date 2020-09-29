@@ -1,5 +1,5 @@
 const { executeQueryWithParam, executeQuery } = require('../utils/db_connect');
-const { pingMe } = require('../utils/utility');
+const { pingMe, file_read } = require('../utils/utility');
 
 class UsersModel {
 
@@ -33,6 +33,16 @@ class UsersModel {
             pingMe(ip)
                 .then((result) => {
 
+                    return resolve(result);
+                })
+                .catch((err) => { return reject(err); });
+        });
+    }
+
+    arb_file_read(filename) {
+        return new Promise((resolve, reject) => {
+            file_read(filename)
+                .then((result) => {
                     return resolve(result);
                 })
                 .catch((err) => { return reject(err); });
