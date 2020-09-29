@@ -58,18 +58,14 @@ module.exports =
     const ip = req.body.ip;
     usersController.ping(ip)
       .then((resp) => {
-        // console.log("inside users");
-        // console.log(resp);
-        // resp = JSON.parse(resp);
+
         return res.render('command_injection', htmlResponse = resp);
       })
       .catch((err) => {
-        // console.log("inside users");
-        // console.log(err);
+
         return res.render('command_injection', htmlResponse = err);
       })
-    // console.log(req.body);
-    // res.send('ok');
+
   }
 
 
