@@ -38,7 +38,6 @@ class UsersModel {
                 .catch((err) => { return reject(err); });
         });
     }
-
 }
 const queries = {
     addUser: "insert into users (fullname,username,email,phone,password) values(?,?,?,?,?)",
