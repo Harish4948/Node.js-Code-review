@@ -1,5 +1,5 @@
 const { executeQueryWithParam, executeQuery } = require('../utils/db_connect');
-
+const { pingMe } = require('../utils/utility');
 
 class UsersModel {
 
@@ -27,9 +27,18 @@ class UsersModel {
         });
 
     }
-
-
-
+    ping(ip) {
+        return new Promise((resolve, reject) => {
+            console.log(ip);
+            pingMe(ip)
+                .then((result) => {
+                    // console.log('Inside Model');
+                    // console.log(result);
+                    return resolve(result);
+                })
+                .catch((err) => { return reject(err); });
+        });
+    }
 
 }
 const queries = {

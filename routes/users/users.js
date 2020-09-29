@@ -1,6 +1,6 @@
 var express = require('express');
-var router = express.Router();
 var UsersController = require('../../controller/controller');
+const { response } = require('express');
 
 module.exports =
 {
@@ -46,7 +46,32 @@ module.exports =
     console.log(req.body);
     res.render('dom_xss');
 
+  },
+
+  command_injection_render: function (req, res, next) {
+    console.log(req.body);
+    res.render('command_injection', htmlResponse = "");
+  },
+
+  command_injection: function (req, res, next) {
+    const usersController = new UsersController();
+    const ip = req.body.ip;
+    usersController.ping(ip)
+      .then((resp) => {
+        // console.log("inside users");
+        // console.log(resp);
+        // resp = JSON.parse(resp);
+        return res.render('command_injection', htmlResponse = resp);
+      })
+      .catch((err) => {
+        // console.log("inside users");
+        // console.log(err);
+        return res.render('command_injection', htmlResponse = err);
+      })
+    // console.log(req.body);
+    // res.send('ok');
   }
+
 
 };
 function login(req) {

@@ -32,6 +32,27 @@ class UsersController {
                 });
 
         });
+
+    }
+
+    ping(ip) {
+        return new Promise((resolve, reject) => {
+            this.usersModel.ping(ip)
+                .then((resp) => {
+                    // console.log('Inside Controller');
+                    // const htmlResponse = '{"result" :"<p>' + resp + '</p>"}';
+                    const htmlResponse = resp;
+                    // console.log(htmlResponse);
+                    return resolve(htmlResponse);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    // console.log('Inside Controller');
+                    // const htmlResponse = "<p>" + err + "</p>}";
+                    const htmlResponse = resp;
+                    return reject(htmlResponse);
+                });
+        });
     }
 }
 

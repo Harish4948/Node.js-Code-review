@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="form">
+        <form action="/command_injection" method="post">
+            <label>Ip</label>
+            <input id="ip" name="ip" type="text">
+            <button type="submit">Ping</button>
+        </form>
+    </div>
+
+    <div>
+        <%- htmlResponse %>
+
+    </div>
+
+</body>
+
+</html>
