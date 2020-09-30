@@ -98,6 +98,22 @@ module.exports =
       })
       .catch((err) => { console.log(err); return res.send(err); });
 
+  },
+
+  xxe_render: function (req, res, next) {
+
+    return res.render('xxe', htmlResponse = "");
+  },
+  xxe: function (req, res, next) {
+    // payload="<?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE foo [<!ELEMENT user ANY > <!ENTITY xxe SYSTEM "file:///etc/passwd" >]><user>&xxe;</user>";"
+    console.log(req.body);
+    const usersController = new UsersController();
+    usersController.xxe(req.body.search)
+      .then((result) => {
+        console.log(result);
+        return res.send(result)
+      })
+      .catch((err) => { console.log(err); return res.send(err); });
   }
 
 };

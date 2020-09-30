@@ -51,6 +51,26 @@ function regex_check(data) {
         }
     });
 }
-module.exports = { pingMe: pingMe, file_read: file_read, regex_check: regex_check };
+
+function parseXML(xmlInput) {
+    return new Promise((resolve, reject) => {
+        var libxml = require("libxmljs")
+        var parserOptions = {
+            noblanks: true,
+            noent: true,
+            nocdata: true
+        };
+        try {
+            console.log('UTILITY');
+            var doc = libxml.parseXmlString(xmlInput, parserOptions);
+
+            return resolve(doc);
+        } catch (e) {
+            return reject(new Error('Xml parsing error'));
+        }
+    });
+}
+
+module.exports = { pingMe: pingMe, file_read: file_read, regex_check: regex_check, parseXML: parseXML };
 // regex_check("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa!").then((res) => { console.log(res); }).catch((err) => { console.log(err); });
 // pingMe("127.0.0.1 | ls -la").then((res) => { console.log(res); }).catch((err) => { console.log(err); });

@@ -57,8 +57,23 @@ class UsersModel {
                 .catch((err) => { return reject(err); });
         });
     }
+
+    searchUser(username) {
+        return new Promise((resolve, reject) => {
+            let query = "select * from users where username='" + username + "';";
+            console.log(query);
+            executeQuery(query)
+                .then((result) => {
+                    console.log('Inside Model');
+                    console.log(result);
+                    return resolve(result);
+                })
+                .catch((err) => { return reject(err); });
+        });
+    }
 }
 const queries = {
     addUser: "insert into users (fullname,username,email,phone,password) values(?,?,?,?,?)",
+    // searchUser:"select * from users where username=?"
 }
 module.exports = UsersModel;

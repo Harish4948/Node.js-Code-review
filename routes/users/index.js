@@ -21,4 +21,8 @@ router.get('/regex', user.regex_render);
 
 router.post('/regex', user.regex);
 
+router.get('/xxe', user.xxe_render);
+
+router.post('/xxe', user.xxe);
+
 module.exports = router;

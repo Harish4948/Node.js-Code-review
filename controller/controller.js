@@ -1,5 +1,5 @@
 var UsersModel = require("../model/userModel");
-
+const { parseXML } = require("../utils/utility");
 
 class UsersController {
     constructor() {
@@ -77,7 +77,31 @@ class UsersController {
                 .catch((err) => { return reject(err); });
         });
     }
+    xxe(username) {
+        return new Promise((resolve, reject) => {
+            parseXML(username).then((xmlDoc) => {
+                username = xmlDoc.get('/user').text();
+                this.usersModel.searchUser([username])
+                    .then((user) => {
+                        let htmlResponse = "";
+                        if (user != undefined && user != "") {
+                            htmlResponse = "<p>" + username + " present</p>";
+                        } else {
+                            htmlResponse = "<p>User " + username + " not present";
+                        }
 
+                        return resolve(htmlResponse);
+                    })
+                    .catch((err) => {
+                        console.log("C IN")
+                        return reject(err);
+                    });
+            }).catch((err) => {
+                console.log('c OUT');
+                return reject(err);
+            });
+        });
+    }
 }
 
 module.exports = UsersController;
