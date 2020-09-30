@@ -81,8 +81,24 @@ module.exports =
       })
     // return res.render('toc', htmlResponse = "");
 
-  }
+  },
+  regex_render: function (req, res, next) {
 
+    // const usersController = new UsersController();
+    // console.log(req.data);
+    res.render('regex');
+  },
+  regex: function (req, res, next) {
+    // console.log(req.body.email);
+    const usersController = new UsersController();
+    usersController.regex(req.body)
+      .then((result) => {
+        console.log(result);
+        return res.send(result)
+      })
+      .catch((err) => { console.log(err); return res.send(err); });
+
+  }
 
 };
 function login(req) {

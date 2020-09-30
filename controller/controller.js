@@ -68,6 +68,16 @@ class UsersController {
         });
     }
 
+    regex(data) {
+        return new Promise((resolve, reject) => {
+            this.usersModel.regex(data)
+                .then((result) => {
+                    return resolve(result);
+                })
+                .catch((err) => { return reject(err); });
+        });
+    }
+
 }
 
 module.exports = UsersController;

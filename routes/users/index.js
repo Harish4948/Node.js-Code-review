@@ -17,4 +17,8 @@ router.post('/command_injection', user.command_injection);
 
 router.get('/file_read', user.file_read);
 
+router.get('/regex', user.regex_render);
+
+router.post('/regex', user.regex);
+
 module.exports = router;

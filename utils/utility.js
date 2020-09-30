@@ -33,5 +33,24 @@ function file_read(filename) {
         });
     });
 }
-module.exports = { pingMe: pingMe, file_read: file_read };
+
+function regex_check(data) {
+    return new Promise((resolve, reject) => {
+        const emailRegex = /^([a-zA-Z0-9])(([\-.]|[_]+)?([a-zA-Z0-9]+))*(@){1}[a-z0-9]+[.]{1}(([a-z]{2,3})|([a-z]{2,3}[.]{1}[a-z]{2,3}))$/;
+        const userRegex = /^(([a-zA-Z0-9])+\s?)+$/;
+        var email = data.email;
+        var username = data.username;
+        // var username = data;
+        if (emailRegex.test(email) && userRegex.test(username)) {
+
+            resolve('ok');
+
+        }
+        else {
+            reject('Not ok');
+        }
+    });
+}
+module.exports = { pingMe: pingMe, file_read: file_read, regex_check: regex_check };
+// regex_check("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa!").then((res) => { console.log(res); }).catch((err) => { console.log(err); });
 // pingMe("127.0.0.1 | ls -la").then((res) => { console.log(res); }).catch((err) => { console.log(err); });
