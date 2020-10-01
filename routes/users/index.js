@@ -47,4 +47,8 @@ router.post('/second_order_register', user.second_order_sqli_register);
 
 router.get('/second_order', user.isAuthenticated, user.second_order_sqli);
 
+router.get('/delete_user', user.isAuthenticated, user.delete_render);
+
+router.post('/delete_user', user.isAuthenticated, user.delete);
+
 module.exports = router;

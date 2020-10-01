@@ -212,6 +212,18 @@ module.exports =
         console.log("err : " + err);
         return res.render('second_order', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, isGetReq: false, htmlResponse: "" });
       });
+  },
+  delete_render: function (req, res, next) {
+    if (req.user.id === 12) {
+      res.render('delete');
+    }
+    else {
+      res.send("USER ID: " + req.user.id + "NOT AUTHORISED ");
+    }
+  },
+  delete: function (req, res, next) {
+    console.log("DELETED");
+    res.send('DELETED');
   }
 };
 
