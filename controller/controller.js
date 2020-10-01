@@ -155,7 +155,63 @@ class UsersController {
                 });
         })
     }
+    second_order_sqli_register(user) {
+        return new Promise((resolve, reject) => {
+            this.usersModel.second_order_sqli_register(user)
+                .then(() => {
+                    resolve();
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+        });
+    }
+    searchByName(username) {
+        return new Promise((resolve, reject) => {
+            this.usersModel.searchByName([username])
+                .then((user) => {
 
+                    let htmlResponse = "";
+                    if (user != undefined && user != "") {
+                        htmlResponse = generateSearchUserResponse(user)
+                        // htmlResponse = user;
+                    } else {
+                        htmlResponse = "<p>User " + username + " not present";
+                    }
+
+                    return resolve(htmlResponse);
+                })
+                .catch((err) => {
+                    return reject(err);
+                });
+        });
+    }
 }
 
 module.exports = UsersController;
+
+
+function generateSearchUserResponse(user) {
+    var resString = "<table border='1'>";
+    resString += "<tr><th>User Id</th>";
+    resString += "<th>Full Name</th>";
+    resString += "<th>User Name</th>";
+    resString += "<th>Email</th>";
+    resString += "<th>Phone</th>";
+    resString += "</tr>";
+
+    for (i = 0; i < user.length; i++) {
+        resString += "<tr> ";
+        resString += "<td>" + user[i].id + "</td> ";
+        resString += "<td>" + (user[i].fullname) + "</td> ";
+        resString += "<td>" + (user[i].username) + "</td> ";
+        resString += "<td>" + (user[i].email) + "</td> ";
+        resString += "<td>" + (user[i].phone) + "</td> ";
+
+
+        resString += "</tr> ";
+    }
+    resString += "</table>";
+
+    return resString;
+}

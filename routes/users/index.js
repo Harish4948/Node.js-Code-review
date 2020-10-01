@@ -41,4 +41,10 @@ router.get('/change_password', user.isAuthenticated, user.change_password_render
 
 router.post('/change_password', user.isAuthenticated, user.change_password);
 
+router.get('/second_order_register', user.second_order_sqli_register_render);
+
+router.post('/second_order_register', user.second_order_sqli_register);
+
+router.get('/second_order', user.isAuthenticated, user.second_order_sqli);
+
 module.exports = router;

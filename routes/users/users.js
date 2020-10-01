@@ -3,7 +3,7 @@ var UsersController = require('../../controller/controller');
 const { response } = require('express');
 var passport = require('passport');
 
-
+const usersController = new UsersController();
 module.exports =
 {
 
@@ -163,7 +163,7 @@ module.exports =
   },
   idor: function (req, res, next) {
     const usersController = new UsersController;
-    // console.log(req.query.id);
+    // console.lologing(req.query.id);
     usersController.findUserById(req.query.id)
       .then((htmlResponse) => {
         console.log(htmlResponse);
@@ -187,12 +187,36 @@ module.exports =
       }).catch((err) => {
         return res.send(err);
       })
+  },
+  second_order_sqli_register: function (req, res, next) {
 
+    usersController.second_order_sqli_register(req.body)
+      .then(() => {
+        return res.redirect('/login');
+      }).catch((err) => {
+        return res.render('second_order_register', { errorMessage: err });
+      })
+  },
+  second_order_sqli_register_render: function (req, res, next) {
+    return res.render('second_order_register');
+
+  },
+
+  second_order_sqli: function (req, res, next) {
+
+    usersController.searchByName(req.user.username)
+      .then((htmlResponse) => {
+        // console.log(htmlResponse);
+        return res.render('second_order', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, isGetReq: false, htmlResponse: htmlResponse });
+      }).catch((err) => {
+        console.log("err : " + err);
+        return res.render('second_order', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, isGetReq: false, htmlResponse: "" });
+      });
   }
-
 };
 
 function home(req, res, next) {
+  // console.log("123" + req.user.id);
   return res.render('home', { message: req.user.username, id: req.user.id });
 }
 
