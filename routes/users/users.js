@@ -160,12 +160,25 @@ module.exports =
       }).catch((err) => {
         return res.render('deserialization', { htmlResponse: htmlResponse });
       })
+  },
+  idor: function (req, res, next) {
+    const usersController = new UsersController;
+    // console.log(req.query.id);
+    usersController.getUserById(req.query.id)
+      .then((htmlResponse) => {
+        console.log(htmlResponse);
+        res.render('idor', { htmlResponse: htmlResponse });
+        // return res.send(htmlResponse);
+      }).catch((err) => {
+        return res.send('ok');
+      })
+
   }
 
 };
 
 function home(req, res, next) {
-  return res.render('home', { message: req.user.username });
+  return res.render('home', { message: req.user.username, id: req.user.id });
 }
 
 function login(req) {
