@@ -12,6 +12,26 @@ class UsersModel {
         });
     }
 
+    findUserById(parameter) {
+        return new Promise((resolve, reject) => {
+            let query = "SELECT * FROM users WHERE id =" + parameter[0] + ";"
+            executeQuery(query)
+                .then((result) => { return resolve(result) })
+                .catch((err) => { reject(err) });
+        });
+    }
+    authenticateUser(parameter) {
+        return new Promise((resolve, reject) => {
+            let query = "select * from users where email ='" + parameter[0] + "' AND password = '" + parameter[1] + "'";
+            // console.log(query);
+            executeQuery(query).then((result) => {
+                resolve(result);
+            }).catch((err) => {
+                reject(err);
+            });
+        });
+    }
+
     login(creds) {
         return new Promise((resolve, reject) => {
             let query = "select * from users where username='" + creds['username'] + "' and password='" + creds['password'] + "';";

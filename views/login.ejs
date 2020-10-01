@@ -9,7 +9,7 @@
 
 <body>
 
-    <% if (user.length==0) { %>
+    <% if (message.length==0) { %>
     <form action="/login" method="post">
         <div class="input-group mb-3">
             <input type="text" name="username" class="form-control" placeholder="Email">
@@ -40,9 +40,7 @@
     </form>
     <% } else{ %>
 
-    <% user.map((m)=>{ %>
-    <p>Welcome <%- m['username'] %></p>
-    <% }); %>
+    <%= message %>
     <% } %>
 </body>
 

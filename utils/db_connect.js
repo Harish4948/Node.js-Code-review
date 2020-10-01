@@ -30,7 +30,7 @@ function executeQuery(query) {
                 return reject(err);
             } else {
                 console.log('db');
-                console.log(resp);
+                // console.log(resp);
                 return resolve(resp);
             }
         });

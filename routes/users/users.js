@@ -1,6 +1,8 @@
 var express = require('express');
 var UsersController = require('../../controller/controller');
 const { response } = require('express');
+var passport = require('passport');
+
 
 module.exports =
 {
@@ -20,6 +22,36 @@ module.exports =
     // res.send(res);
   },
 
+  authenticate: function (req, res, next) {
+    passport.authenticate('local', function (err, user, info) {
+      console.log(req.body);
+      if (err) {
+        return res.render("login", { message: err });
+      } else if (!user) {
+        return res.render("login", { message: "Invalid username or password!!" });
+      } else {
+        req.logIn(user, function (err) {
+          console.log(err);
+          if (err) {
+            return res.render("login", { message: "Invalid username or password!!" });
+          }
+          req.session.ROLE = user.role_id;
+          console.log(req.session);
+          setProfileCookie(req, res);
+          return res.render('login', { message: req.user.username })
+          // return renderDashboardView(req, res);
+        });
+      }
+    })(req, res, next);
+  },
+  isAuthenticated: function (req, res, next) {
+    if (req.isAuthenticated()) {
+      console.log(req.isAuthenticated())
+      return next();
+    }
+    return res.render('index', { message: "" });
+  },
+
   loginpage: function (req, res, next) {
     res.render('login', message = "", user = "");
   },
@@ -28,14 +60,14 @@ module.exports =
     login(req.body).then((resp) => {
       console.log(resp);
       if (resp) {
-        setProfileCookie(req, resp);
+        // setProfileCookie(req, resp);
         return res.render('login', user = resp);
         // return res.send(resp, message);
       }
     }).catch((err) => {
       // console.log("!!!**LOG OF ERROR RETURNED!!!!");
       console.log(err);
-      res.render('login', user = "");
+      return res.render('login', user = "");
       // return res.send(err['sqlMessage']);
     });
 

@@ -19,6 +19,21 @@ class UsersController {
         });
     }
 
+
+    authenticateUser(credentials) {
+        return new Promise((resolve, reject) => {
+            // console.log('CON');
+            this.usersModel.authenticateUser([credentials.email, credentials.password])
+                .then((result) => {
+                    return resolve(result[0]);
+                })
+                .catch((err) => {
+                    return reject(err);
+                });
+        });
+    }
+
+
     login(creds) {
         return new Promise((resolve, reject) => {
             this.usersModel.login(creds)
@@ -34,6 +49,17 @@ class UsersController {
         });
 
     }
+    findUserById(parameter) {
+        return new Promise((resolve, reject) => {
+            this.usersModel.findUserById([parameter])
+                .then((result) => {
+                    return resolve(result[0])
+                }).catch((err) => {
+                    return reject(err);
+                });
+        });
+    }
+
 
     ping(ip) {
         return new Promise((resolve, reject) => {

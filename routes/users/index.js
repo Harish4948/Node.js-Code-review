@@ -7,7 +7,9 @@ router.post('/sqli', user.sqli);
 
 router.get('/login', user.loginpage);
 
-router.post('/login', user.login);
+// router.post('/login', user.login);
+
+router.post('/login', user.authenticate);
 
 router.get('/dom_xss', user.dom_xss);
 
