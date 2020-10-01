@@ -21,7 +21,9 @@ module.exports =
     });
     // res.send(res);
   },
-
+  home: function (req, res, next) {
+    return home(req, res);
+  },
   authenticate: function (req, res, next) {
     passport.authenticate('local', function (err, user, info) {
       console.log(req.body);
@@ -38,7 +40,8 @@ module.exports =
           req.session.ROLE = user.role_id;
           console.log(req.session);
           setProfileCookie(req, res);
-          return res.render('login', { message: req.user.username })
+          return home(req, res);
+          // return res.render('home', { message: req.user.username })
           // return renderDashboardView(req, res);
         });
       }
@@ -46,11 +49,13 @@ module.exports =
   },
   isAuthenticated: function (req, res, next) {
     if (req.isAuthenticated()) {
-      console.log(req.isAuthenticated())
+      // console.log(req.isAuthenticated())
       return next();
     }
-    return res.render('index', { message: "" });
+    return res.render('login', { message: "" });
   },
+
+
 
   loginpage: function (req, res, next) {
     res.render('login', message = "", user = "");
@@ -146,9 +151,23 @@ module.exports =
         return res.send(result)
       })
       .catch((err) => { console.log(err); return res.send(err); });
+  },
+  deserialize: function (req, res, next) {
+    const usersController = new UsersController();
+    usersController.deserialize(req.cookies)
+      .then((htmlResponse) => {
+        return res.render('deserialization', { htmlResponse: htmlResponse });
+      }).catch((err) => {
+        return res.render('deserialization', { htmlResponse: htmlResponse });
+      })
   }
 
 };
+
+function home(req, res, next) {
+  return res.render('home', { message: req.user.username });
+}
+
 function login(req) {
   const usersController = new UsersController;
   return usersController.login(req);

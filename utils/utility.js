@@ -18,6 +18,40 @@ function pingMe(ip) {
         });
     });
 }
+
+function getDeserializeData(data) {
+    return new Promise((resolve, reject) => {
+        try {
+            var serialize = require('node-serialize');
+            var str = new Buffer(data, 'base64').toString('ascii');
+            var obj = serialize.unserialize(str);
+            if (obj.fullname) {
+                function getDeserializeData(data) {
+                    return new Promise((resolve, reject) => {
+                        try {
+                            var serialize = require('node-serialize');
+                            var str = new Buffer(data, 'base64').toString('ascii');
+                            var obj = serialize.unserialize(str);
+                            if (obj.fullname) {
+                                return resolve(obj.fullname);
+                            } else {
+                                return reject(new Error("User data not found"));
+                            }
+                        } catch (e) {
+                            return reject(e);
+                        }
+                    });
+                }
+                return resolve(obj.fullname);
+            } else {
+                return reject(new Error("User data not found"));
+            }
+        } catch (e) {
+            return reject(e);
+        }
+    });
+}
+
 function file_read(filename) {
     return new Promise((resolve, reject) => {
         var fs = require('fs');
@@ -71,6 +105,6 @@ function parseXML(xmlInput) {
     });
 }
 
-module.exports = { pingMe: pingMe, file_read: file_read, regex_check: regex_check, parseXML: parseXML };
+module.exports = { pingMe: pingMe, file_read: file_read, regex_check: regex_check, parseXML: parseXML, getDeserializeData: getDeserializeData };
 // regex_check("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa!").then((res) => { console.log(res); }).catch((err) => { console.log(err); });
 // pingMe("127.0.0.1 | ls -la").then((res) => { console.log(res); }).catch((err) => { console.log(err); });

@@ -5,7 +5,7 @@ router.get('/', user.index);
 
 router.post('/sqli', user.sqli);
 
-router.get('/login', user.loginpage);
+router.get('/login', user.isAuthenticated, user.home);
 
 // router.post('/login', user.login);
 
@@ -26,5 +26,14 @@ router.post('/regex', user.regex);
 router.get('/xxe', user.xxe_render);
 
 router.post('/xxe', user.xxe);
+
+router.post('/logout', function (req, res) {
+    req.logout();
+    console.log(req.session);
+    res.redirect('/');
+});
+
+router.get('/deserialization', user.isAuthenticated, user.deserialize);
+
 
 module.exports = router;
