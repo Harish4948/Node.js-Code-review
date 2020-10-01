@@ -173,6 +173,21 @@ module.exports =
         return res.send('ok');
       })
 
+  },
+
+  change_password_render: function (req, res, next) {
+    return res.render('change_password.ejs', { id: req.user.id });
+  },
+  change_password: function (req, res, next) {
+    const usersController = new UsersController;
+    const creds = { id: req.body.id, password: req.body.password };
+    usersController.change_password(creds)
+      .then((htmlResponse) => {
+        res.send(htmlResponse);
+      }).catch((err) => {
+        return res.send(err);
+      })
+
   }
 
 };

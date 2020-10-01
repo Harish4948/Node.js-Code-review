@@ -37,4 +37,8 @@ router.get('/deserialization', user.isAuthenticated, user.deserialize);
 
 router.get('/idor', user.isAuthenticated, user.idor);
 
+router.get('/change_password', user.isAuthenticated, user.change_password_render);
+
+router.post('/change_password', user.isAuthenticated, user.change_password);
+
 module.exports = router;

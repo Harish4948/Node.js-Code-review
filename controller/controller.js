@@ -153,7 +153,19 @@ class UsersController {
         });
 
     }
-
+    change_password(creds) {
+        return new Promise((resolve, reject) => {
+            this.usersModel.changePassword(creds)
+                .then(() => {
+                    const htmlResponse = "<p>Password Changed";
+                    return resolve(htmlResponse);
+                })
+                .catch((err) => {
+                    const htmlResponse = "OOPS!!TRY AGAIN";
+                    return resolve(htmlResponse);
+                });
+        })
+    }
 
 }
 

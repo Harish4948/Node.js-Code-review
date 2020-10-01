@@ -91,9 +91,25 @@ class UsersModel {
                 .catch((err) => { return reject(err); });
         });
     }
+
+    changePassword(creds) {
+        let password = creds['password'];
+        let userId = creds['id'];
+        return new Promise((resolve, reject) => {
+            let query = queries.changePassword;
+            executeQueryWithParam(query, [password, userId]).then((result) => {
+                resolve();
+            }).catch((err) => {
+                console.log("error : " + err);
+                reject(err);
+            });
+        });
+    }
+
 }
 const queries = {
     addUser: "insert into users (fullname,username,email,phone,password) values(?,?,?,?,?)",
+    changePassword: "update users set password=? where id=?"
     // searchUser:"select * from users where username=?"
 }
 module.exports = UsersModel;
