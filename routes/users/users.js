@@ -164,7 +164,7 @@ module.exports =
   idor: function (req, res, next) {
     const usersController = new UsersController;
     // console.log(req.query.id);
-    usersController.getUserById(req.query.id)
+    usersController.findUserById(req.query.id)
       .then((htmlResponse) => {
         console.log(htmlResponse);
         res.render('idor', { htmlResponse: htmlResponse });

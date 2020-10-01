@@ -60,17 +60,6 @@ class UsersController {
         });
     }
 
-    getUserById(parameter) {
-        return new Promise((resolve, reject) => {
-            this.usersModel.findUserById([parameter])
-                .then((result) => {
-                    return resolve(result[0]);
-                }).catch((err) => {
-                    return reject(err);
-                });
-        });
-    }
-
 
     ping(ip) {
         return new Promise((resolve, reject) => {
