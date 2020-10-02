@@ -51,4 +51,10 @@ router.get('/delete_user', user.isAuthenticated, user.delete_render);
 
 router.post('/delete_user', user.isAuthenticated, user.delete);
 
+router.get('/contactus', user.isAuthenticated, user.contactus_render);
+
+router.post('/contactus', user.isAuthenticated, user.contactus);
+
+router.get('/view_contactus', user.isAuthenticated, user.view_contactus);
+
 module.exports = router;

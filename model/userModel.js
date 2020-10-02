@@ -129,10 +129,33 @@ class UsersModel {
         });
     }
 
+    contactus(params) {
+        return new Promise((resolve, reject) => {
+            let query = queries.contactus;
+            executeQueryWithParam(query, [params.message, params.id]).then((result) => {
+                resolve();
+            }).catch((err) => {
+                reject(err);
+            })
+        });
+    }
+    view_contactus() {
+        return new Promise((resolve, reject) => {
+            let query = "select * from contactus";
+            executeQuery(query).then((result) => {
+                resolve(result);
+            }).catch((err) => {
+                console.log("error : " + err);
+                reject(err);
+            });
+        });
+    }
+
 }
 const queries = {
     addUser: "insert into users (fullname,username,email,phone,password) values(?,?,?,?,?)",
-    changePassword: "update users set password=? where id=?"
+    changePassword: "update users set password=? where id=?",
+    contactus: "insert into contactus(message,id) values(?,?)"
     // searchUser:"select * from users where username=?"
 }
 module.exports = UsersModel;

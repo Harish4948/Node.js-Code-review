@@ -11,7 +11,7 @@ class UsersController {
             // console.log("Inside Controller");
             this.usersModel.register(parameter)
                 .then((result) => {
-                    return resolve(result)
+                    return resolve(result);
                 })
                 .catch((err) => {
                     return reject(err);
@@ -186,9 +186,54 @@ class UsersController {
                 });
         });
     }
+
+    contactus(params) {
+        return new Promise((resolve, reject) => {
+            // console.log("Inside Controller");
+            this.usersModel.contactus(params)
+                .then(() => {
+                    res = "ok"
+                    return resolve(res);
+                })
+                .catch((err) => {
+                    return reject(err);
+                });
+        });
+    }
+    view_contactus() {
+        return new Promise((resolve, reject) => {
+            this.usersModel.view_contactus()
+                .then((result) => {
+                    var htmlResponse = generateContactusResponse(result);
+                    return resolve(htmlResponse);
+                }).catch((err) => {
+                    return reject(err);
+                });
+        });
+    }
 }
 
 module.exports = UsersController;
+
+
+function generateContactusResponse(result) {
+    var resString = "<table border='1'>";
+    resString += "<tr><th>Message</th>";
+    resString += "<th>result Id</th>";
+    resString += "</tr>";
+
+    for (i = 0; i < result.length; i++) {
+        resString += "<tr> ";
+        resString += "<td>" + (result[i].message) + "</td> ";
+        resString += "<td>" + result[i].id + "</td> ";
+        resString += "</tr> ";
+    }
+    resString += "</table>";
+
+    return resString;
+}
+
+
 
 
 function generateSearchUserResponse(user) {

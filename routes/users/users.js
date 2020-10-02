@@ -91,7 +91,6 @@ module.exports =
   },
 
   command_injection: function (req, res, next) {
-    const usersController = new UsersController();
     const ip = req.body.ip;
     usersController.ping(ip)
       .then((resp) => {
@@ -107,8 +106,6 @@ module.exports =
 
 
   file_read: function (req, res, next) {
-
-    const usersController = new UsersController();
     usersController.file_read(req.query['filename'])
       .then((resp) => {
         return res.render('toc', { htmlResponse: resp });
@@ -127,7 +124,6 @@ module.exports =
   },
   regex: function (req, res, next) {
     // console.log(req.body.email);
-    const usersController = new UsersController();
     usersController.regex(req.body)
       .then((result) => {
         console.log(result);
@@ -144,7 +140,6 @@ module.exports =
   xxe: function (req, res, next) {
     // payload="<?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE foo [<!ELEMENT user ANY > <!ENTITY xxe SYSTEM "file:///etc/passwd" >]><user>&xxe;</user>";"
     console.log(req.body);
-    const usersController = new UsersController();
     usersController.xxe(req.body.search)
       .then((result) => {
         console.log(result);
@@ -153,7 +148,6 @@ module.exports =
       .catch((err) => { console.log(err); return res.send(err); });
   },
   deserialize: function (req, res, next) {
-    const usersController = new UsersController();
     usersController.deserialize(req.cookies)
       .then((htmlResponse) => {
         return res.render('deserialization', { htmlResponse: htmlResponse });
@@ -162,7 +156,6 @@ module.exports =
       })
   },
   idor: function (req, res, next) {
-    const usersController = new UsersController;
     // console.lologing(req.query.id);
     usersController.findUserById(req.query.id)
       .then((htmlResponse) => {
@@ -179,7 +172,6 @@ module.exports =
     return res.render('change_password.ejs', { id: req.user.id });
   },
   change_password: function (req, res, next) {
-    const usersController = new UsersController;
     const creds = { id: req.body.id, password: req.body.password };
     usersController.change_password(creds)
       .then((htmlResponse) => {
@@ -213,31 +205,67 @@ module.exports =
         return res.render('second_order', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, isGetReq: false, htmlResponse: "" });
       });
   },
+
+
   delete_render: function (req, res, next) {
-    if (req.user.id === 12) {
-      res.render('delete');
+    if (req.query.id == 12) {
+      res.render('delete', { id: req.query.id });
     }
     else {
       res.send("USER ID: " + req.user.id + "NOT AUTHORISED ");
     }
   },
+
+
   delete: function (req, res, next) {
     console.log("DELETED");
     res.send('DELETED');
+  },
+
+  contactus_render: function (req, res, next) {
+    res.render('contactus', { id: req.user.id });
+  },
+
+  contactus: function (req, res, next) {
+    console.log(req.body);
+    params = {
+      message: req.body.message,
+      id: parseInt(req.body.id, 10)
+    };
+
+    usersController.contactus(params)
+      .then((result) => {
+        return res.send("Thanks for reaching out to us!");
+      }).catch((err) => {
+        return res.send(err);
+      });
+  },
+  view_contactus: function (req, res, next) {
+    if (req.user.id == 12) {
+      usersController.view_contactus()
+        .then((result) => {
+          console.log(result);
+          res.render('view_contactus', { htmlResponse: result });
+        }).catch((err) => {
+          console.log(err);
+        });
+    }
+    else {
+      res.send("Not authorised");
+    }
   }
 };
 
 function home(req, res, next) {
-  // console.log("123" + req.user.id);
+
   return res.render('home', { message: req.user.username, id: req.user.id });
 }
 
 function login(req) {
-  const usersController = new UsersController;
   return usersController.login(req);
 }
 function sqli(req) {
-  const usersController = new UsersController;
+
   return usersController.register(req);
 }
 
